@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>PIANO Kit</title>
     <link rel="stylesheet" href="pianoCSS.css">
 </head>
+
 <body>
     <div class="keys">
         <!-- <div data-key="65" class="key"></div> -->
@@ -52,28 +54,31 @@
     <audio data-key="76" src="piano/highdo.mp3"></audio>
 
     <script>
-        window.addEventListener('keydown', function(e) {
-        //    console.log(e.keyCode); //콘솔에 키값 받은 것 뿌리기
-        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);//${e.keyCode}:variable ex)83
-    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
-    //    console.log(audio);
-        //    console.log(key);
-    if (!audio) return; //stop the function from running all together
-           audio.currentTime = 0;//rewind to the start
-           audio.play();
-           key.classList.add('playing');
+        function playSound(e) {
+            //    console.log(e.keyCode); //콘솔에 키값 받은 것 뿌리기
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); //${e.keyCode}:variable ex)83
+            const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            //    console.log(audio);
+            //    console.log(key);
+            if (!audio) return; //stop the function from running all together
+            audio.currentTime = 0; //rewind to the start
+            audio.play();
+            key.classList.add('playing');
+            //    key.classList.remove('playing');
+            //    key.classList.toggle('playing');
+        }
 
-           //    key.classList.remove('playing');
-        //    key.classList.toggle('playing');
-        });
-        function removeTransition(e){
-            if(e.propertyName !== 'transform')return; //skip it if it's not a transform
-            console.log(e.propertyName);
+        function removeTransition(e) {
+            if (e.propertyName !== 'transform') return; //skip it if it's not a transform
+            // console.log(e.propertyName);
+            this.classList.remove('playing');
+
         }
 
         const keys = document.querySelectorAll('.key');
-        keys.forEach(key => key.addEventListener('transitionend',removeTransition));
-
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+        window.addEventListener('keydown', playSound);
     </script>
 </body>
+
 </html>
